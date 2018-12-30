@@ -4,5 +4,8 @@
   },
   "main": "main.ns.js",
   "name": "migration-ng",
-  "version": "4.1.0"
+  "version": "4.1.0",
+  "dependencies": {
+    "kinvey-nativescript-sdk": "^3.12.3"
+  }
 }

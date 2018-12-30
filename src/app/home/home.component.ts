@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterExtensions } from "nativescript-angular/router";
+import { Page } from "tns-core-modules/ui/page";
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   title = 'App Médica';
+  
+  message = " Has iniciado exitosamente";
+  
+  constructor(private page: Page, private routerExtensions: RouterExtensions) {
+    this.page.actionBarHidden = true;
+    }
 
-  constructor() { }
+    ngOnInit(): void {
+    }
 
-  ngOnInit() {
-  }
+    logout() {
+        this.routerExtensions.navigate(["/login"], { clearHistory: true });
+    }
 }
