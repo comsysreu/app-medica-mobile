@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   lastDelY = 0;
   headerCollapsed = false;
-  selectedTab = 0;
+  selectedTab = null;
   selectedTabview = 0;
 
   constructor(private page: Page, private routerExtensions: RouterExtensions) {
@@ -51,14 +51,17 @@ export class HomeComponent implements OnInit {
   //Top nav bar tap methods
   onSearchTap() {
     this.selectedTab = 4;
+    this.selectedTabview = null;
   }
   
   onBellTap() {
     this.selectedTab = 5;
+    this.selectedTabview = null;
   }
 
   onAccount() {
     this.selectedTab = 6;
+    this.selectedTabview = null;
   }
   
 

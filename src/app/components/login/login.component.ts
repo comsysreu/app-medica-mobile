@@ -2,9 +2,11 @@ import { Component, ElementRef, ViewChild } from "@angular/core";
 import { alert, prompt } from "tns-core-modules/ui/dialogs";
 import { Page } from "tns-core-modules/ui/page";
 import { RouterExtensions } from "nativescript-angular/router";
+import { TextField } from "tns-core-modules/ui/text-field";
 
 import { User } from "../../shared/user.model";
 import { UserService } from "../../shared/user.service";
+import { RuleSet } from "tns-core-modules/ui/styling/css-selector/css-selector";
 
 @Component({
   selector: 'app-login',
@@ -17,15 +19,16 @@ export class LoginComponent {
   isLoggingIn = true;
   user: User;
   processing = false;
+  test: string = '';
   @ViewChild("password") password: ElementRef;
   @ViewChild("confirmPassword") confirmPassword: ElementRef;
 
   constructor(private page: Page, private routerExtensions: RouterExtensions) {
     this.page.actionBarHidden = true;
     this.user = new User();
-    this.user.email = "user@nativescript.org";
-    this.user.password = "password";
-    this.user.confirmPassword = "password";
+    this.user.email = '';
+    this.user.password = '';
+    this.user.confirmPassword = '';
   }
 
   toggleForm() {
@@ -44,25 +47,55 @@ export class LoginComponent {
     } else {
       this.register();
     }
+
   }
 
   login() {
     this.processing = false;
-    this.routerExtensions.navigate(["/home"], { clearHistory: true });
-    this.alert("Lamentablemente no pudimos encontrar tu cuenta.");
-
+    if (this.user.email == 'admin' && this.user.password == 'admin') {
+      this.routerExtensions.navigate(["/home"], { clearHistory: true });
+      this.alert("Bienvenido: " + this.user.email);
+    } else {
+      this.alert("Credenciales ingresadas son incorrectas.");
+    }
   }
+
+  public getTextEmail(args) {
+    let textField = <TextField>args.object;
+    this.user.email = textField.text;
+  }
+
+  public getTextPassword(args) {
+    let textField = <TextField>args.object;
+    this.user.password = textField.text;
+  }
+
+  public getTextConfirmPassword(args) {
+    let textField = <TextField>args.object;
+    this.user.confirmPassword = textField.text;
+  }
+
+  /* 
+  in the input 
+  (returnPress)="onReturn($event)"
+  
+   public onReturn(args) {
+     let textField = <TextField>args.object;
+ 
+     console.log("onReturn");
+     this.test = textField.text;
+     console.log(this.test);
+   } */
 
   register() {
     if (this.user.password != this.user.confirmPassword) {
+      this.processing = false;
       this.alert("Tus contraseñas no coinciden.");
       return;
     }
-    console.log(this.user.password)
-    console.log(this.user.confirmPassword)
-    this.processing = false;
     this.alert("Su cuenta fue creada exitosamente.");
     this.isLoggingIn = true;
+    this.routerExtensions.navigate(["/home"], { clearHistory: true });
   }
 
   forgotPassword() {

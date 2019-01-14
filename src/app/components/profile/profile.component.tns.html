@@ -1,4 +1,44 @@
-<StackLayout>
-    <Label class="body m-20" text="Profile component" textWrap="true"></Label>
-    <Button class="btn btn-primary" text="Cerrar Sesión" (tap)="logout()"></Button>
-</StackLayout>
+<ScrollView sdkExampleTitle sdkToggleNavButton>
+    <FlexboxLayout class="page">
+        <StackLayout class="form">
+            <Image class="logo" src="~/assets/login.png"></Image>
+            <Label class="header" text="Mi Cuenta"></Label>
+
+            <PreviousNextView>
+                <GridLayout rows="auto, auto, auto, auto">
+                    <StackLayout row="0" class="input-field">
+                        <TextField class="input" hint="Nombre y apellido" [isEnabled]="!processing" keyboardType="email"
+                            autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email" returnKeyType="next"
+                            (returnPress)="focusPassword()"></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+
+                    <StackLayout row="1" class="input-field">
+                        <TextField class="input" hint="Correo" [isEnabled]="!processing" keyboardType="email"
+                            autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
+                            (returnPress)="focusPassword()"></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+
+                    <StackLayout row="2" class="input-field">
+                        <TextField class="input" hint="Género" [isEnabled]="!processing" keyboardType="email"
+                            autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
+                            (returnPress)="focusPassword()"></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+
+                    <StackLayout row="3" *ngIf="!isLoggingIn" class="input-field">
+                        <TextField #password class="input" [isEnabled]="!processing" hint="Contraseña" secure="true"
+                            [(ngModel)]="user.password" returnKeyType="done"></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+
+                    <ActivityIndicator rowSpan="4" [busy]="processing"></ActivityIndicator>
+                </GridLayout>
+            </PreviousNextView>
+
+            <Button text="Editar perfil" class="btn btn-primary m-t-20"></Button>
+        </StackLayout>
+
+    </FlexboxLayout>
+</ScrollView>

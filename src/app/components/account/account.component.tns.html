@@ -4,40 +4,49 @@
             <Image class="logo" src="~/assets/login.png"></Image>
             <Label class="header" text="Mi Cuenta"></Label>
 
+
             <PreviousNextView>
                 <GridLayout rows="auto, auto, auto, auto">
-                    <StackLayout row="0" class="input-field">
-                        <TextField class="input" hint="Nombre y apellido" [isEnabled]="!processing" keyboardType="email"
-                            autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email" returnKeyType="next"
-                            (returnPress)="focusPassword()"></TextField>
+                    <StackLayout row="0" col="0,1" class="input-field">
+                        <TextField class="input" hint="Nombres" [isEnabled]="!processing" autocorrect="false"
+                            autocapitalizationType="none" [text]='Name' returnKeyType="next" (returnPress)="focusPassword()"></TextField>
+                        <!-- <TextField hint="Enter date" [text]='userTxt' returnKeyType="done" autocorrect="false"
+                            maxLength="10"></TextField> -->
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
                     <StackLayout row="1" class="input-field">
-                        <TextField class="input" hint="Correo" [isEnabled]="!processing" keyboardType="email"
-                            autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
+                        <TextField class="input" hint="Apellidos" [isEnabled]="!processing" autocorrect="false"
+                            autocapitalizationType="none" [text]='lastName' [returnKeyType]="isLoggingIn ? 'done' : 'next'"
                             (returnPress)="focusPassword()"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
                     <StackLayout row="2" class="input-field">
-                        <TextField class="input" hint="Género" [isEnabled]="!processing" keyboardType="email"
-                            autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
-                            (returnPress)="focusPassword()"></TextField>
-                        <StackLayout class="hr-light"></StackLayout>
-                    </StackLayout>
-
-                    <StackLayout row="3" *ngIf="!isLoggingIn" class="input-field">
-                        <TextField #password class="input" [isEnabled]="!processing" hint="Contraseña" secure="true"
-                            [(ngModel)]="user.password" returnKeyType="done"></TextField>
+                        <TextField #password class="input" [isEnabled]="!processing" hint="Correo electrónico" [text]='Email'
+                            returnKeyType="done"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
                     <ActivityIndicator rowSpan="4" [busy]="processing"></ActivityIndicator>
                 </GridLayout>
+                <GridLayout rows="auto auto" columns="* *" class="m-5">
+                    <Label class="input-field" [text]="gender" [checked]='state' textWrap="true" col="0"></Label>
+                    <Switch class="input-field" [checked]="state" (checkedChange)="onFirstChecked($event)" col="1"></Switch>
+                </GridLayout>
+                <!-- <GridLayout rows="auto auto" columns="* *" class="m-5">
+                        <StackLayout>
+                        <RadioGroup [(value)]="state">
+                            <RadioButton text="Selection 1"> </RadioButton> 
+                            <RadioButton text="Selection 2"> </RadioButton> 
+                            <RadioButton text="Selection 3"> </RadioButton> 
+                        </RadioGroup>
+                    </StackLayout>
+                </GridLayout> -->
+
             </PreviousNextView>
 
-            <Button text="Editar perfil" class="btn btn-primary m-t-20"></Button>
+            <Button text="Editar perfil" class="btn btn-primary m-t-20" (tap)="editProfile()"></Button>
         </StackLayout>
 
     </FlexboxLayout>
