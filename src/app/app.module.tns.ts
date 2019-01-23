@@ -10,13 +10,6 @@ import { HistoryComponent } from './components/history/history.component';
 import { SearchComponent } from './components/search/search.component';
 import { AccountComponent } from './components/account/account.component';
 
-
-// Uncomment and add to NgModule imports if you need to use two-way binding
-// import { NativeScriptFormsModule } from 'nativescript-angular/forms';
-
-// Uncomment and add to NgModule imports  if you need to use the HTTP wrapper
-// import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
-
 @NgModule({
   declarations: [
     AppComponent,

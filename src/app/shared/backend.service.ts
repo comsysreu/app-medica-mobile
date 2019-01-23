@@ -5,9 +5,11 @@ import { Injectable } from "@angular/core";
 import { Kinvey } from "kinvey-nativescript-sdk";
 
 Kinvey.init({
-    appKey: "kid_SyY8LYO8M",
-    appSecret: "09282985d7c540f7b076a9c7fd884c77"
-});
+    apiHostname: 'CUSTDEP_HOST',
+    micHostname: 'CUSTDEP_MIC_HOST',
+    appKey: 'kid_rkqMGrzQE',
+    appSecret: '173d80e3bc6e49a68a55b541cacb4b19'
+})
 
 export class BackendService {
     static isUserLoggedIn() {

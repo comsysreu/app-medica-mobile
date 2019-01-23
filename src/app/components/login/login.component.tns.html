@@ -5,24 +5,38 @@
             <Label class="header" [text]="title"></Label>
 
             <PreviousNextView>
-                <GridLayout rows="auto, auto, auto">
-                    <StackLayout row="0" class="input-field">
-                        <TextField class="input" hint="Correo electrónico ó Usuario" [isEnabled]="!processing" keyboardType="email"
-                            (textChange)="getTextEmail($event)" autocorrect="false" autocapitalizationType="none"
-                            [(ngModel)]="user.email" returnKeyType="next" (returnPress)="focusPassword()"></TextField>
+                <GridLayout rows="auto, auto, auto, auto, auto">
+                    <StackLayout row="0" *ngIf="!isLoggingIn" class="input-field">
+                        <TextField #name class="input" [isEnabled]="!processing" hint="Nombres" autocorrect="true"
+                            (textChange)="getTextName($event)" returnKeyType="next"
+                            (returnPress)="focusConfirmPassword()"></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+                    <StackLayout row="1" *ngIf="!isLoggingIn" class="input-field">
+                        <TextField #lastName class="input" [isEnabled]="!processing" hint="Apellidos" autocorrect="true"
+                            (textChange)="getTextLastName($event)" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
+                            (returnPress)="focusConfirmPassword()"></TextField>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+                    <StackLayout row="2" class="input-field">
+                        <TextField class="input" hint="Correo electrónico ó Usuario" [isEnabled]="!processing"
+                            keyboardType="email" (textChange)="getTextEmail($event)" autocorrect="false"
+                            autocapitalizationType="none" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
+                            (returnPress)="focusPassword()"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
-                    <StackLayout row="1" class="input-field">
+                    <StackLayout row="3" class="input-field">
                         <TextField #password class="input" [isEnabled]="!processing" hint="Contraseña" secure="true"
-                            (textChange)="getTextPassword($event)" [(ngModel)]="test" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
+                            (textChange)="getTextPassword($event)" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
                             (returnPress)="focusConfirmPassword()"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
-                    <StackLayout row="2" *ngIf="!isLoggingIn" class="input-field">
+                    <StackLayout row="4" *ngIf="!isLoggingIn" class="input-field">
                         <TextField #confirmPassword class="input" [isEnabled]="!processing" hint="Confirmar Contraseña"
-                            secure="true"  (textChange)="getTextConfirmPassword($event)" [(ngModel)]="user.confirmPassword" returnKeyType="done"></TextField>
+                            secure="true" (textChange)="getTextConfirmPassword($event)"
+                            returnKeyType="done"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
