@@ -1,5 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
+import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { HistoryComponent } from './components/history/history.component';
 import { SearchComponent } from './components/search/search.component';
 import { AccountComponent } from './components/account/account.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DetailUserComponent } from './components/detail-user/detail-user.component';
 
 @NgModule({
   declarations: [
@@ -19,10 +22,13 @@ import { AccountComponent } from './components/account/account.component';
     HistoryComponent,
     SearchComponent,
     AccountComponent,
+    DashboardComponent,
+    DetailUserComponent,
   ],
   imports: [
     NativeScriptModule,
     AppRoutingModule,
+    NativeScriptHttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

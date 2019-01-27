@@ -1,0 +1,11 @@
+/* Add mobile styles for the component here.  */
+
+.round-text{
+    background-color: gray;
+    border-radius: 30%;
+    height: 15%;
+    width: 15%;
+    color: #ffffff;
+    text-align: center;
+    margin: 3px;
+}

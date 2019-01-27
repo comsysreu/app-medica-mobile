@@ -2,19 +2,25 @@ import { Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { DetailUserComponent } from './components/detail-user/detail-user.component';
 
-import { BackendService } from "./shared/backend.service";
-let router = false;
+let router = true;
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: router ?  '/home' : '/login',
+        redirectTo: router ? '/home' : '/login',
         pathMatch: 'full',
     },
     {
         path: 'home',
         component: HomeComponent,
+        children: [
+            {
+                path: 'detailUser/:userId',
+                component: DetailUserComponent,
+            },
+        ]
     },
     {
         path: 'login',

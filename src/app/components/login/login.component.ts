@@ -3,10 +3,19 @@ import { alert, prompt } from "tns-core-modules/ui/dialogs";
 import { Page } from "tns-core-modules/ui/page";
 import { RouterExtensions } from "nativescript-angular/router";
 import { TextField } from "tns-core-modules/ui/text-field";
-import { LOGIN_URL } from '../../routes/endpoint'
 import { User } from "../../shared/user.model";
-import { RuleSet } from "tns-core-modules/ui/styling/css-selector/css-selector";
-import { request, getFile, getImage, getJSON, getString } from "tns-core-modules/http";
+import { LoginService } from '../../services/login.service';
+import {
+  getBoolean,
+  setBoolean,
+  getNumber,
+  setNumber,
+  getString,
+  setString,
+  hasKey,
+  remove,
+  clear
+} from "tns-core-modules/application-settings";
 
 @Component({
   selector: 'app-login',
@@ -24,7 +33,7 @@ export class LoginComponent {
   @ViewChild("password") password: ElementRef;
   @ViewChild("confirmPassword") confirmPassword: ElementRef;
 
-  constructor(private page: Page, private routerExtensions: RouterExtensions) {
+  constructor(private page: Page, private routerExtensions: RouterExtensions, private loginService: LoginService) {
     this.page.actionBarHidden = true;
     this.user = new User();
     this.user.email = '';
@@ -36,6 +45,28 @@ export class LoginComponent {
     this.isLoggingIn = !this.isLoggingIn;
   }
 
+
+  getUserByUserName(userName: string) {
+    this.loginService.getUsersByUserName(userName)
+      .subscribe((user: any) => this.login(user))
+  }
+
+  postUserRegister(user) {
+    user = {
+      "_id": "",
+      "name": user.name,
+      "lastName": user.lastName,
+      "gerder": true,
+      "userName": user.email,
+      "email": `${user.email}@email.com`,
+      "password": user.password,
+      "type_user": false
+    }
+
+    this.loginService.postUserRegister(user)
+      .subscribe((response: any) => this.registerSuccess(response))
+  }
+
   submit() {
     if (!this.user.email || !this.user.password) {
       this.alert("Por favor, proporcione una dirección de correo electrónico ó usuario y una contraseña.");
@@ -44,20 +75,20 @@ export class LoginComponent {
 
     this.processing = true;
     if (this.isLoggingIn) {
-      this.loginUser(this.user.email);
+      this.getUserByUserName(this.user.email);
     } else {
-      this.registerUser(this.user);
-      //this.register();
+      this.register();
     }
 
   }
 
   login(response) {
     this.processing = false;
-    if(response.length != 0){
-      if (this.user.email == response[0].userName && this.user.password == response[0].password) {
+    if (response.length != 0) {
+      if (this.user.email == response.userName && this.user.password == response.password) {
         this.routerExtensions.navigate(["/home"], { clearHistory: true });
-        this.alert("Bienvenido: " + response[0].name + " " + response[0].lastName);
+        this.alert("Bienvenido: " + response.name + " " + response.lastName);
+        setString("idUser", response._id);
       } else {
         this.alert("Credenciales ingresadas son incorrectas.");
       }
@@ -75,7 +106,7 @@ export class LoginComponent {
     let textField = <TextField>args.object;
     this.user.lastName = textField.text;
   }
-  
+
   public getTextEmail(args) {
     let textField = <TextField>args.object;
     this.user.email = textField.text;
@@ -109,7 +140,11 @@ export class LoginComponent {
       this.alert("Tus contraseñas no coinciden.");
       return;
     }
-    this.alert("Su cuenta fue creada exitosamente.");
+    this.postUserRegister(this.user);
+  }
+
+  registerSuccess(user: any) {
+    this.alert("Su cuenta fue creada exitosamente " + user.name + " " + user.lastName);
     this.isLoggingIn = true;
     this.routerExtensions.navigate(["/home"], { clearHistory: true });
   }
@@ -148,49 +183,6 @@ export class LoginComponent {
 
   logout() {
     this.routerExtensions.navigate(["/home"], { clearHistory: true });
-  }
-
-  private getUsers() {
-    getJSON(`${LOGIN_URL}`).then((response: any) => {
-      this.items = response;
-    }, (e) => {
-      console.log(e);
-    });
-  }
-
-  private async loginUser(userName: string) {
-    await getJSON(`${LOGIN_URL}/userName/${userName}`).then((response: any) => {
-      setTimeout(() => {
-        this.login(response);
-      }, 500);
-    }, (e) => {
-      console.log(e);
-    });
-  }
-
-  private async registerUser(user) {
-    console.log(user);
-    await request({
-      url: `${LOGIN_URL}`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      content: JSON.stringify({
-          "_id": "5c080f3966b89561f0f14b67", 
-          "name": user.name,
-          "lastName": user.lastName,
-          "gerder": true,
-          "userName": user.email,
-          "email": "scastros@email.com",
-          "password": user.password,
-          "type_user": false
-         
-      })
-    }).then((response) => {
-      const result = response.content.toJSON();
-      this.register();
-    }, (e) => {
-      console.log(e);
-    });
   }
 
 }

@@ -3,6 +3,8 @@ import { TextField } from "tns-core-modules/ui/text-field";
 import { Switch } from "tns-core-modules/ui/switch";
 import { User } from "../../shared/user.model";
 import { alert, prompt } from "tns-core-modules/ui/dialogs";
+import { LoginService } from '../../services/login.service';
+import { getString } from "tns-core-modules/application-settings";
 
 @Component({
   selector: 'app-account',
@@ -11,24 +13,42 @@ import { alert, prompt } from "tns-core-modules/ui/dialogs";
 })
 export class AccountComponent implements OnInit {
 
-  Name: string = 'Julia';
-  lastName: string = 'Rodríguez';
-  gender: string = 'Femenino';
-  Email: string = 'ejemplo@email.com';
-  state:boolean = false;
+  name: string = '';
+  lastName: string = '';
+  gender: string = '';
+  email: string = '';
+  userName: string = '';
+  state: boolean = null;
   user: User;
-  constructor() {
-    this.state == true ? this.gender = 'Masculino' : this.gender = 'Femenino' 
+  processing = true;
+
+  constructor(private loginService: LoginService) {
+    let userAuth = getString("idUser");
+    this.getUser(userAuth);
   }
 
   ngOnInit() {
   }
 
+  getUser(userId: string) {
+    this.loginService.getUsersById(userId)
+      .subscribe((user: any) => {
+        this.name = user.name;
+        this.lastName = user.lastName;
+        this.userName = user.userName;
+        this.email = user.email;
+        this.state = user.gerder;
+        user.gerder == true ? this.gender = 'Masculino' : this.gender = 'Femenino';
+        this.processing = false;
+      })
+  }
+
 
   public onFirstChecked(args) {
     let firstSwitch = <Switch>args.object;
-    firstSwitch.checked == true ? this.gender = 'Masculino' : this.gender = 'Femenino' 
-}
+    firstSwitch.checked == true ? this.gender = 'Masculino' : this.gender = 'Femenino'
+    this.state = firstSwitch.checked;
+  }
 
   onFocus(args) {
     // focus event will be triggered when the users enters the TextField
@@ -40,8 +60,19 @@ export class AccountComponent implements OnInit {
     let textField = <TextField>args.object;
   }
 
-  editProfile(){
-    this.alert("Perfil Editado exitosamente.");
+  editProfile() {
+    let user = {
+      "_id": getString("idUser"),
+      "name": this.name,
+      "lastName": this.lastName,
+      "gerder": this.state,
+      "userName": this.userName,
+      "email": this.email,
+      "password": '123',
+      "type_user": false
+    }
+    this.loginService.updateUser(user)
+      .subscribe((user: any) => this.alert("Perfil Editado exitosamente."));
   }
 
   forgotPassword() {
@@ -65,6 +96,25 @@ export class AccountComponent implements OnInit {
       okButtonText: "Aceptar",
       message: message
     });
+  }
+
+  public getName(args) {
+    let textField = <TextField>args.object;
+    this.name = textField.text;
+  }
+
+  public getLastName(args) {
+    let textField = <TextField>args.object;
+    this.lastName = textField.text;
+  }
+
+  public getUserName(args) {
+    let textField = <TextField>args.object;
+    this.userName = textField.text;
+  }
+  public getEmail(args) {
+    let textField = <TextField>args.object;
+    this.email = textField.text;
   }
 
 }

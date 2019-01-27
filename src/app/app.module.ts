@@ -9,6 +9,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { HistoryComponent } from './components/history/history.component';
 import { SearchComponent } from './components/search/search.component';
 import { AccountComponent } from './components/account/account.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DetailUserComponent } from './components/detail-user/detail-user.component';
 
 
 @NgModule({
@@ -20,6 +22,8 @@ import { AccountComponent } from './components/account/account.component';
     HistoryComponent,
     SearchComponent,
     AccountComponent,
+    DashboardComponent,
+    DetailUserComponent,
   ],
   imports: [
     BrowserModule,

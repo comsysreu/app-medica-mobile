@@ -1,0 +1,33 @@
+<GridLayout *ngIf="!detail" row="2" width="100%" backgroundColor="white">
+    <StackLayout>
+        <ListView #listview [items]="items" separatorColor="transparent">
+            <ng-template let-item="item" >
+                <StackLayout class="main" (tap)="showItem(item)">
+                    <StackLayout class="content">
+                        <Image stretch="aspectFill" class="card-img" src="~/assets/login.png"></Image>
+                        <GridLayout width="100%" columns="auto,*" rows="auto,auto" class="" verticalAlignment="center">
+                            <Label row="0" col="0" rowSpan="2" class="round-text" text="5.0"></Label>
+                            <Label row="0" col="1" class="item-name" textwrap="true" verticalAlignment="bottom"
+                                horizontalAlignment="left" [text]="item.email"></Label>
+                            <GridLayout row="1" col="1" rows="auto" columns="auto,auto,auto">
+                                <Label row="0" col="0" class="item-category" textwrap="true" verticalAlignment="top"
+                                    horizontalAlignment="left" [text]="item.name"></Label>
+                                <Label col="1" row="0" class="fa rating-icon" text="5.0"></Label>
+                                <Label col="2" row="0" class="rating-value item-category" [text]="item.lastName"></Label>
+                            </GridLayout>
+                        </GridLayout>
+                        <StackLayout width="100%" marginTop="5" class="line"></StackLayout>
+                    </StackLayout>
+                    <StackLayout width="100%" class="lineBreak"></StackLayout>
+                </StackLayout>
+            </ng-template>
+        </ListView>
+    </StackLayout>
+</GridLayout>
+
+<GridLayout *ngIf="detail" row="2" width="100%" backgroundColor="white">
+    <StackLayout>
+        <app-detail-user [item]="item" ></app-detail-user>
+        <Button class="btn btn-primary" text="Regresar" (tap)="showItem()"></Button>
+    </StackLayout>
+</GridLayout>
