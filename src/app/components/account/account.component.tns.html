@@ -9,24 +9,24 @@
                 <GridLayout rows="auto, auto, auto, auto, auto">
                     <StackLayout row="0" col="0,1" class="input-field">
                         <TextField class="input" hint="Nombres" [isEnabled]="!processing" autocorrect="false" (textChange)="getName($event)"
-                            autocapitalizationType="none" [text]='name' returnKeyType="next" (returnPress)="focusPassword()"></TextField>
+                            autocapitalizationType="none" [text]='user.name' returnKeyType="next" (returnPress)="focusPassword()"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
                     <StackLayout row="1" class="input-field">
                         <TextField class="input" hint="Apellidos" [isEnabled]="!processing" autocorrect="false" (textChange)="getLastName($event)"
-                            autocapitalizationType="none" [text]='lastName' [returnKeyType]="isLoggingIn ? 'done' : 'next'"
+                            autocapitalizationType="none" [text]='user.lastName' [returnKeyType]="isLoggingIn ? 'done' : 'next'"
                             (returnPress)="focusPassword()"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
                     <StackLayout row="2" class="input-field">
-                        <TextField #password class="input" [isEnabled]="!processing" hint="Usuario" [text]='userName' (textChange)="getUserName($event)"
+                        <TextField #password class="input" [isEnabled]="!processing" hint="Usuario" [text]='user.userName' (textChange)="getUserName($event)"
                             returnKeyType="done"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
                     <StackLayout row="3" class="input-field">
-                        <TextField #password class="input" [isEnabled]="!processing" hint="Correo electrónico" [text]='email' (textChange)="getEmail($event)"
+                        <TextField #password class="input" [isEnabled]="!processing" hint="Correo electrónico" [text]='user.email' (textChange)="getEmail($event)"
                             returnKeyType="done"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
@@ -34,8 +34,8 @@
                     <ActivityIndicator rowSpan="4" [busy]="processing"></ActivityIndicator>
                 </GridLayout>
                 <GridLayout rows="auto auto" columns="* *" class="m-5">
-                    <Label class="input-field" [text]="gender" [checked]='state' textWrap="true" col="0"></Label>
-                    <Switch class="input-field" [checked]="state" (checkedChange)="onFirstChecked($event)" col="1"></Switch>
+                    <Label class="input-field" [text]="gender" [checked]='user.state' textWrap="true" col="0"></Label>
+                    <Switch class="input-field" [checked]="user.gerder" (checkedChange)="onFirstChecked($event)" col="1"></Switch>
                 </GridLayout>
             </PreviousNextView>
 

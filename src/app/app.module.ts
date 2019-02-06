@@ -11,6 +11,7 @@ import { SearchComponent } from './components/search/search.component';
 import { AccountComponent } from './components/account/account.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DetailUserComponent } from './components/detail-user/detail-user.component';
+import { SpecialtiesComponent } from './components/specialties/specialties.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { DetailUserComponent } from './components/detail-user/detail-user.compon
     AccountComponent,
     DashboardComponent,
     DetailUserComponent,
+    SpecialtiesComponent,
   ],
   imports: [
     BrowserModule,

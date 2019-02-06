@@ -52,4 +52,15 @@
   .bold {
     color: #000000; 
   }
+
+  .list-group-item-text{
+    margin-top: 15px;
+    border-width: 1;
+    border-color: #ffffff;
+    height: 50%;
+    width: 100%;
+    font-family: "ionicons";
+    font-size: 14px;
+    color: #000000;
+}
   

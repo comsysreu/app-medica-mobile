@@ -29,9 +29,6 @@ export class LoginComponent {
   isLoggingIn = true;
   user: User;
   processing = false;
-  test: string = '';
-  @ViewChild("password") password: ElementRef;
-  @ViewChild("confirmPassword") confirmPassword: ElementRef;
 
   constructor(private page: Page, private routerExtensions: RouterExtensions, private loginService: LoginService) {
     this.page.actionBarHidden = true;
@@ -60,7 +57,11 @@ export class LoginComponent {
       "userName": user.email,
       "email": `${user.email}@email.com`,
       "password": user.password,
-      "type_user": false
+      "type_user": false,
+      "age": 0,
+      "mobile": 0,
+      "dateCreation": new Date(),
+      "dateModification": new Date(),
     }
 
     this.loginService.postUserRegister(user)
@@ -89,6 +90,7 @@ export class LoginComponent {
         this.routerExtensions.navigate(["/home"], { clearHistory: true });
         this.alert("Bienvenido: " + response.name + " " + response.lastName);
         setString("idUser", response._id);
+        setBoolean("typeUser", response.type_user);
       } else {
         this.alert("Credenciales ingresadas son incorrectas.");
       }
@@ -162,15 +164,6 @@ export class LoginComponent {
         this.alert("Su contraseña fue restablecida con éxito. Por favor, consulte su correo electrónico para obtener instrucciones sobre cómo elegir una nueva contraseña.");
       }
     });
-  }
-
-  focusPassword() {
-    this.password.nativeElement.focus();
-  }
-  focusConfirmPassword() {
-    if (!this.isLoggingIn) {
-      this.confirmPassword.nativeElement.focus();
-    }
   }
 
   alert(message: string) {

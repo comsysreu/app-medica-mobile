@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TextField } from "tns-core-modules/ui/text-field";
 import { Switch } from "tns-core-modules/ui/switch";
-import { User } from "../../shared/user.model";
+import { LoginModel } from "../../models/login.model";
 import { alert, prompt } from "tns-core-modules/ui/dialogs";
 import { LoginService } from '../../services/login.service';
 import { getString } from "tns-core-modules/application-settings";
@@ -13,13 +13,9 @@ import { getString } from "tns-core-modules/application-settings";
 })
 export class AccountComponent implements OnInit {
 
-  name: string = '';
-  lastName: string = '';
-  gender: string = '';
-  email: string = '';
-  userName: string = '';
   state: boolean = null;
-  user: User;
+  gender: string = '';
+  user: LoginModel;
   processing = true;
 
   constructor(private loginService: LoginService) {
@@ -33,13 +29,9 @@ export class AccountComponent implements OnInit {
   getUser(userId: string) {
     this.loginService.getUsersById(userId)
       .subscribe((user: any) => {
-        this.name = user.name;
-        this.lastName = user.lastName;
-        this.userName = user.userName;
-        this.email = user.email;
-        this.state = user.gerder;
         user.gerder == true ? this.gender = 'Masculino' : this.gender = 'Femenino';
         this.processing = false;
+        this.user = user;
       })
   }
 
@@ -63,13 +55,17 @@ export class AccountComponent implements OnInit {
   editProfile() {
     let user = {
       "_id": getString("idUser"),
-      "name": this.name,
-      "lastName": this.lastName,
+      "name": this.user.name,
+      "lastName": this.user.lastName,
       "gerder": this.state,
-      "userName": this.userName,
-      "email": this.email,
-      "password": '123',
-      "type_user": false
+      "userName": this.user.userName,
+      "email": this.user.email,
+      "password": this.user.password,
+      "type_user": false,
+      "age": this.user.age,
+      "mobile": this.user.mobile,
+      "dateCreation": this.user.dateCreation,
+      "dateModification": new Date(),
     }
     this.loginService.updateUser(user)
       .subscribe((user: any) => this.alert("Perfil Editado exitosamente."));
@@ -100,21 +96,21 @@ export class AccountComponent implements OnInit {
 
   public getName(args) {
     let textField = <TextField>args.object;
-    this.name = textField.text;
+    this.user.name = textField.text;
   }
 
   public getLastName(args) {
     let textField = <TextField>args.object;
-    this.lastName = textField.text;
+    this.user.lastName = textField.text;
   }
 
   public getUserName(args) {
     let textField = <TextField>args.object;
-    this.userName = textField.text;
+    this.user.userName = textField.text;
   }
   public getEmail(args) {
     let textField = <TextField>args.object;
-    this.email = textField.text;
+    this.user.email = textField.text;
   }
 
 }

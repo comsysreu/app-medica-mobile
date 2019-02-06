@@ -1,15 +1,28 @@
 <StackLayout class="main">
     <StackLayout class="content">
         <Image stretch="aspectFill" class="card-img" src="~/assets/login.png"></Image>
-        <GridLayout width="100%" columns="auto,*" rows="auto,auto" class="" verticalAlignment="center">
-            <Label row="0" col="0" rowSpan="2" class="round-text" text="5.0"></Label>
+        <GridLayout width="100%" columns="auto,*" rows="auto,auto,auto,auto" class="" verticalAlignment="center">
+            <Label *ngIf="item.doctor != ''" row="0" col="0" rowSpan="2" class="round-text" verticalAlignment="center" [text]="item.doctor.score"></Label>
             <Label row="0" col="1" class="item-name" textwrap="true" verticalAlignment="bottom" horizontalAlignment="left"
-                [text]="item.email"></Label>
-            <GridLayout row="1" col="1" rows="auto" columns="auto,auto,auto">
-                <Label row="0" col="0" class="item-category" textwrap="true" verticalAlignment="top"
-                    horizontalAlignment="left" [text]="item.name"></Label>
-                <Label col="1" row="0" class="fa rating-icon" text="5.0"></Label>
-                <Label col="2" row="0" class="rating-value item-category" [text]="item.lastName"></Label>
+                [text]="item.user.email"></Label>
+            <GridLayout row="1" col="1" rows="auto" columns="auto,auto">
+                <Label col="0" row="0" class="item-category" textwrap="true" verticalAlignment="top"
+                    horizontalAlignment="left" [text]="item.user.name"></Label>
+                <Label col="1" row="0" class="rating-value item-category" [text]="item.user.lastName"></Label>
+            </GridLayout>
+
+            <GridLayout *ngIf="item.doctor != ''" row="2" col="1" rows="auto, auto" columns="auto">
+                <Label col="0" row="0" class="item-category" textwrap="true" verticalAlignment="top"
+                    horizontalAlignment="left" [text]="item.doctor.graduation"></Label>
+                <TextView col="0" row="1" editable="false" class="list-group-item-text" textWrap="true" [text]="item.doctor.description">
+                </TextView>
+            </GridLayout>
+
+            <GridLayout *ngIf="item.specialties != ''" row="3" col="1" rows="auto, auto" columns="auto">
+                <Label col="0" row="0" class="item-category" textwrap="true" verticalAlignment="top"
+                    horizontalAlignment="left" [text]="item.specialties.name"></Label>
+                <TextView col="0" row="1" editable="false" class="list-group-item-text" textWrap="true" [text]="item.specialties.description">
+                </TextView>
             </GridLayout>
         </GridLayout>
     </StackLayout>

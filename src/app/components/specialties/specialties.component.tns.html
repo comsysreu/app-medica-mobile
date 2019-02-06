@@ -5,13 +5,11 @@
                 <StackLayout class="main" (tap)="showItem(item)">
                     <StackLayout class="content">
                         <Image stretch="aspectFill" class="card-img" src="~/assets/login.png"></Image>
-                        <GridLayout width="100%" columns="auto,*" rows="auto,auto" class="" verticalAlignment="center">
+                        <GridLayout width="100%" columns="auto,*" rows="auto" class="" verticalAlignment="center">
                             <Label row="0" col="0" class="item-name" rowSpan="2" [text]="item.name"></Label>
-                            <Label row="0" col="1" class="item-name" rowSpan="4" [text]="item.lastName"></Label>
                         </GridLayout>
-                        <GridLayout width="100%" row="1" col="1" rows="auto" columns="auto,auto,auto">
-                            <Label col="0" row="0" class="rating-value" rowSpan="2" [text]="item.email"></Label>
-                            <Label col="2" row="0" class="rating-value" rowSpan="4" [text]="item.mobile"></Label>
+                        <GridLayout width="100%" columns="auto,*" rows="auto" class="" verticalAlignment="center">
+                            <Button class="btn btn-primary" text="Ver detalles" (tap)="showItem()"></Button>
                         </GridLayout>
                         <StackLayout width="100%" marginTop="5" class="line"></StackLayout>
                     </StackLayout>
@@ -20,13 +18,4 @@
             </ng-template>
         </ListView>
     </StackLayout>
-</GridLayout>
-
-<GridLayout *ngIf="detail" row="2" width="100%" backgroundColor="white">
-    <ScrollView sdkExampleTitle sdkToggleNavButton>
-        <StackLayout>
-            <app-detail-user [item]="item"></app-detail-user>
-            <Button class="btn btn-primary" text="Regresar" (tap)="showItem()"></Button>
-        </StackLayout>
-    </ScrollView>
 </GridLayout>

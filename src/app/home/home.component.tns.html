@@ -58,6 +58,7 @@
 
     <GridLayout *ngIf="selectedTab == 1" row="2" width="100%" backgroundColor="white">
         <StackLayout>
+            <app-specialties></app-specialties>
             <Label class="body m-20" [text]="message" textWrap="true"></Label>
             <Button class="btn btn-primary" text="Log out -1" (tap)="logout()"></Button>
         </StackLayout>

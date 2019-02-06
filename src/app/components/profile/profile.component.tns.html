@@ -2,34 +2,35 @@
     <FlexboxLayout class="page">
         <StackLayout class="form">
             <Image class="logo" src="~/assets/login.png"></Image>
-            <Label class="header" text="Mi Cuenta"></Label>
+            <Label class="header" text="Mi Perfil"></Label>
 
             <PreviousNextView>
                 <GridLayout rows="auto, auto, auto, auto">
-                    <StackLayout row="0" class="input-field">
-                        <TextField class="input" hint="Nombre y apellido" [isEnabled]="!processing" keyboardType="email"
-                            autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email" returnKeyType="next"
-                            (returnPress)="focusPassword()"></TextField>
+                    <StackLayout row="0" col="0,1" class="input-field">
+                        <TextField class="input" hint="Graduado" [isEnabled]="!processing" autocorrect="false"
+                            (textChange)="getGraduation($event)" autocapitalizationType="none" [text]='item.graduation'
+                            returnKeyType="next" (returnPress)="focusPassword()"></TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
                     <StackLayout row="1" class="input-field">
-                        <TextField class="input" hint="Correo" [isEnabled]="!processing" keyboardType="email"
-                            autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
-                            (returnPress)="focusPassword()"></TextField>
+                        <TextView col="0" row="1" class="list-group-item-text" hint="Description" (textChange)="getDescription($event)"
+                            textWrap="true" [text]="item.description">
+                        </TextView>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
                     <StackLayout row="2" class="input-field">
-                        <TextField class="input" hint="Género" [isEnabled]="!processing" keyboardType="email"
-                            autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email" [returnKeyType]="isLoggingIn ? 'done' : 'next'"
-                            (returnPress)="focusPassword()"></TextField>
+                        <TextField class="input" hint="Colegiado" [isEnabled]="!processing" keyboardType="email"
+                            (textChange)="getCollegiate($event)" autocorrect="false" autocapitalizationType="none"
+                            (returnPress)="focusPassword()" [text]="item.collegiate">
+                        </TextField>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
-                    <StackLayout row="3" *ngIf="!isLoggingIn" class="input-field">
-                        <TextField #password class="input" [isEnabled]="!processing" hint="Contraseña" secure="true"
-                            [(ngModel)]="user.password" returnKeyType="done"></TextField>
+                    <StackLayout row="3" class="input-field" *ngIf="specialtiesList.length > 0">
+                        <ListPicker [items]="specialtiesList" [selectedIndex]="selectSpecialtie" (selectedIndexChange)="selectedIndexChanged($event)"
+                            class="p-15"></ListPicker>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
 
@@ -37,7 +38,7 @@
                 </GridLayout>
             </PreviousNextView>
 
-            <Button text="Editar perfil" class="btn btn-primary m-t-20"></Button>
+            <Button text="Editar perfil" class="btn btn-primary m-t-20" (tap)="submit()"></Button>
         </StackLayout>
 
     </FlexboxLayout>

@@ -9,3 +9,8 @@
     text-align: center;
     margin: 3px;
 }
+
+.item-name{
+    padding-left: 5px;
+    padding-right: 5px;
+}

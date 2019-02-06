@@ -7,5 +7,9 @@ export class LoginModel {
     email: string;
     password: string;
     type_user: boolean;
+    age: Number;
+    mobile: Number;
+    dateCreation: Date;
+    dateModification: Date;
     __v: number;
 }

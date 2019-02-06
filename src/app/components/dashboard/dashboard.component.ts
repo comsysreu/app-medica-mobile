@@ -1,6 +1,7 @@
 import * as Toast from "nativescript-toast";
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { LoginService } from '../../services/login.service';
+import { DoctorsService } from '../../services/doctors.service';
 import * as application from "tns-core-modules/application";
 import { RouterExtensions } from "nativescript-angular/router";
 
@@ -15,12 +16,14 @@ export class DashboardComponent implements OnInit, OnChanges {
   detail: boolean = false;
   item: any = {}
 
-  constructor(private loginService: LoginService, private routerExtensions: RouterExtensions) { }
+  constructor(private loginService: LoginService, private routerExtensions: RouterExtensions, private doctorsService: DoctorsService) { }
 
   ngOnInit() {
-    this.loginService.getUsers()
-      .subscribe((users: any) => this.items = users);
-    Toast.makeText("Datos cargados.").show();
+    this.doctorsService.getDoctors()
+      .subscribe((doctors: any) => {
+        this.items = doctors;
+        Toast.makeText("Médicos encontrados: " + this.items.length).show();
+      });
   }
 
   ngOnChanges() {
@@ -41,7 +44,23 @@ export class DashboardComponent implements OnInit, OnChanges {
 
   showItem(item: any) {
     this.detail = !this.detail;
-    this.detail ? this.item = item : this.item = {};
+    if (this.detail) {
+
+      this.doctorsService.getDoctorId(item._id)
+        .subscribe((doctor: any) => {
+          this.item = doctor;
+          if (doctor.doctor == undefined) {
+            Toast.makeText("Registro no contiene detalles ").show();
+            this.item = {
+              user: item,
+              doctor: '', 
+              specialties: ''
+            }
+          }
+        })
+    }
+    if (!this.detail)
+      this.item = {};
   }
 
 }
